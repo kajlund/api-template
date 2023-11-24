@@ -1,10 +1,12 @@
 import express from 'express'
 
+import { statusCodes } from '../../../utils/status.js'
+
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
   try {
-    res.status(200).json([])
+    res.status(statusCodes.OK).json([])
   } catch (err) {
     next(err)
   }
@@ -13,7 +15,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
-    res.status(200).json({ id })
+    res.status(statusCodes.OK).json({ id })
   } catch (err) {
     next(err)
   }
@@ -21,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    res.status(200).json(req.body)
+    res.status(statusCodes.OK).json(req.body)
   } catch (err) {
     next(err)
   }
@@ -30,7 +32,7 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
-    res.status(200).json({ id, data: req.body })
+    res.status(statusCodes.OK).json({ id, data: req.body })
   } catch (err) {
     next(err)
   }
@@ -39,7 +41,7 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
-    res.status(200).json({ id })
+    res.status(statusCodes.OK).json({ id })
   } catch (err) {
     next(err)
   }
