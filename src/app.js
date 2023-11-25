@@ -3,7 +3,7 @@ import cors from 'cors'
 
 import db from './db.js'
 import errorHandler from './utils/error-handler.middleware.js'
-import notFoundHandler from './utils/notfound-handler.middleware.js'
+import notFoundHandler from './utils/notfound.middleware.js'
 import productRouter from './api/v1/products/product.router.js'
 
 const app = express()
