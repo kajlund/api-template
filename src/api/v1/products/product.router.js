@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { validateIdParam } from '../../../utils/common.validators.middleware.js'
 import { statusCodes } from '../../../utils/status.js'
 
 const router = express.Router()
@@ -12,10 +13,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
-  const { id } = req.params
+router.get('/:id', validateIdParam, async (req, res, next) => {
   try {
-    res.status(statusCodes.OK).json({ id })
+    res.status(statusCodes.OK).json({ id: req.paramId })
   } catch (err) {
     next(err)
   }
@@ -29,19 +29,17 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.patch('/:id', async (req, res, next) => {
-  const { id } = req.params
+router.patch('/:id', validateIdParam, async (req, res, next) => {
   try {
-    res.status(statusCodes.OK).json({ id, data: req.body })
+    res.status(statusCodes.OK).json({ id: req.paramId, data: req.body })
   } catch (err) {
     next(err)
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
-  const { id } = req.params
+router.delete('/:id', validateIdParam, async (req, res, next) => {
   try {
-    res.status(statusCodes.OK).json({ id })
+    res.status(statusCodes.OK).json({ id: req.paramId })
   } catch (err) {
     next(err)
   }
