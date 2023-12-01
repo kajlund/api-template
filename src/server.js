@@ -7,6 +7,7 @@ dotenv.config()
 
 import log from './logger.js'
 import app from './app.js'
+import db from './db.js'
 
 process.on('uncaughtException', (err) => {
   log.fatal(`UNCAUGHT EXCEPTION - ${err.stack || err}`)
@@ -15,6 +16,11 @@ process.on('uncaughtException', (err) => {
 
 process.on('unhandledRejection', (reason, p) => {
   log.fatal(`UNHANDLED PROMISE REJECTION: ${util.inspect(p)} reason: ${reason}`)
+})
+
+process.on('SIGTERM', () => {
+  log.info('Clening up and exiting')
+  db.disconnect()
 })
 
 log.info('Starting server')
