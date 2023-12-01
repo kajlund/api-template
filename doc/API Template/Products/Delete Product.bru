@@ -1,0 +1,23 @@
+meta {
+  name: Delete Product
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{BASE_URL}}/api/v1/products/1beb06d2-6118-4a18-9e84-4d004fc0f880
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "name": "Lenovo Yoga X",
+    "description": "Laptop Computer",
+    "price": 999.99
+  }
+}
