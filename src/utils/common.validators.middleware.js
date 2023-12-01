@@ -18,6 +18,6 @@ export const validateIdParam = (req, res, next) => {
     const err = new AppError(statusCodes.UNPROCESSABLE_ENTITY, reasonPhrases.UNPROCESSABLE_ENTITY, errorDetail)
     return next(err)
   }
-  req.paramId = value.id
+  res.locals.id = value.id
   return next()
 }

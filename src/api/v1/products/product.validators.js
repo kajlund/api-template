@@ -15,7 +15,7 @@ export const validateInsert = (req, res, next) => {
     const err = new AppError(statusCodes.UNPROCESSABLE_ENTITY, reasonPhrases.UNPROCESSABLE_ENTITY, errorDetail)
     return next(err)
   }
-  req.data = value
+  res.locals.data = value
   return next()
 }
 
@@ -31,6 +31,6 @@ export const validateUpdate = (req, res, next) => {
     const err = new AppError(statusCodes.UNPROCESSABLE_ENTITY, reasonPhrases.UNPROCESSABLE_ENTITY, errorDetail)
     return next(err)
   }
-  req.data = value
+  res.locals.data = value
   return next()
 }
