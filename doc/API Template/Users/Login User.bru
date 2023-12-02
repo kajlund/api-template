@@ -1,0 +1,26 @@
+meta {
+  name: Login User
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/api/v1/users/login
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "email": "kaj.lund@gmail.com",
+    "password": "Sugarfree123"
+  }
+}
+
+script:post-response {
+  bru.setEnvVar('JWT_TOKEN', res.body.data.token);
+}
