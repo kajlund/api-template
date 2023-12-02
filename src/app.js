@@ -1,4 +1,5 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 import db from './db.js'
@@ -13,6 +14,8 @@ const app = express()
 app.use(express.json())
 // Middleware for url encoding
 app.use(express.urlencoded({ extended: true }))
+// Parse cookies
+app.use(cookieParser(process.env.COOKIE_SECRET))
 // Middleware for handling CORS policy
 app.use(cors())
 

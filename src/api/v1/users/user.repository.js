@@ -10,6 +10,7 @@ const mapToUserEntity = (u) => {
     id: u.id,
     email: u.email,
     alias: u.alias,
+    role: u.role,
     createdAt: u.createdAt,
     updatedAt: u.updatedAt,
   }
@@ -22,7 +23,7 @@ export default {
     return null
   },
   findUserById: async function (id) {
-    const row = dao.findOne(tableName, { id })
+    const row = await dao.findOne(tableName, { id })
     if (row) return mapToUserEntity(row)
     return null
   },
@@ -34,6 +35,10 @@ export default {
     return null
   },
   mapToUserEntity,
+  queryUsers: async function (query) {
+    const rows = await dao.findMany(tableName, query)
+    return rows.map((row) => mapToUserEntity(row))
+  },
   updateLastLogin: function (id) {
     return dao.updateOne(tableName, id, {
       lastLoginAt: new Date().toISOString(),

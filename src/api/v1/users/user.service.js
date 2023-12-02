@@ -15,6 +15,10 @@ export default {
     return user
   },
 
+  getUserList: function (query) {
+    return userRepo.queryUsers(query)
+  },
+
   loginUser: async function (data) {
     const user = await userRepo.findUserByEmail(data.email)
     if (!user) throw unauthorizedError

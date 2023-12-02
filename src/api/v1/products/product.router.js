@@ -1,13 +1,14 @@
 import express from 'express'
 
+import { isAuthenticated, isAdmin } from '../../../utils/auth.middleware.js'
 import { validateIdParam } from '../../../utils/common.validators.middleware.js'
 import { validateInsert, validateUpdate } from './product.validators.js'
-import productService from './product.service.js'
 import { statusCodes } from '../../../utils/status.js'
+import productService from './product.service.js'
 
 const router = express.Router()
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAuthenticated, async (req, res, next) => {
   try {
     const products = await productService.getProductList()
     res.status(statusCodes.OK).json({ sucess: true, message: `Found ${products.length} products`, data: products })
@@ -16,7 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', validateIdParam, async (req, res, next) => {
+router.get('/:id', isAuthenticated, validateIdParam, async (req, res, next) => {
   try {
     const product = await productService.findProductById(res.locals.id)
     res.status(statusCodes.OK).json({ success: true, message: `Found product: ${product.name}`, data: product })
@@ -25,7 +26,7 @@ router.get('/:id', validateIdParam, async (req, res, next) => {
   }
 })
 
-router.post('/', validateInsert, async (req, res, next) => {
+router.post('/', isAuthenticated, validateInsert, async (req, res, next) => {
   try {
     const product = await productService.createProduct(res.locals.data)
     res.status(statusCodes.OK).json({
@@ -38,7 +39,7 @@ router.post('/', validateInsert, async (req, res, next) => {
   }
 })
 
-router.patch('/:id', validateIdParam, validateUpdate, async (req, res, next) => {
+router.patch('/:id', isAuthenticated, validateIdParam, validateUpdate, async (req, res, next) => {
   try {
     const product = await productService.updateProduct(res.locals.id, res.locals.data)
     res.status(statusCodes.OK).json({ success: true, message: `Updated product: ${product.name}`, data: product })
@@ -47,7 +48,7 @@ router.patch('/:id', validateIdParam, validateUpdate, async (req, res, next) => 
   }
 })
 
-router.delete('/:id', validateIdParam, async (req, res, next) => {
+router.delete('/:id', isAuthenticated, isAdmin, validateIdParam, async (req, res, next) => {
   try {
     const deleted = await productService.deleteProduct(res.locals.id)
     res.status(statusCodes.OK).json({ success: true, message: `Deleted product: ${deleted.name}`, data: deleted })
